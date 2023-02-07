@@ -1,0 +1,28 @@
+{
+    "id": 1,
+    "log": [
+        {
+            "customerId": 1,
+            "order": {
+                "snacks": [
+                    "Popcorn Chicken Small",
+                    "Boneless Strips 4 pc"
+                ],
+                "beverages": [
+                    "pepsi"
+                ]
+            },
+            "isComplete": false
+        },
+        {
+            "customerId": 2,
+            "order": {
+                "snacks": [
+                    "Rice Bowl with Chicken Popcorn"
+                ],
+                "beverages": []
+            },
+            "isComplete": false
+        }
+    ]
+}
