@@ -1,0 +1,20 @@
+{
+  "name": "backend-boilerplate",
+  "version": "1.0.0",
+  "description": "Standalone Backend Boilerplate using NodeJS and Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "microservice",
+    "backend",
+    "NodeJS",
+    "Express"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.33.0"
+  }
+}
