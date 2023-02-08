@@ -1,5 +1,5 @@
 {
-  "name": "backend-boilerplate",
+  "name": "k8s-designer-backend",
   "version": "1.0.0",
   "description": "Standalone Backend Boilerplate using NodeJS and Express",
   "main": "index.js",
