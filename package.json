@@ -1,0 +1,22 @@
+{
+  "name": "k8s-designer-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo jest",
+    "lint": "echo eslint --ext .jsx --fix src",
+    "build": "echo building..."
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tech-university-india/k8s-designer-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tech-university-india/k8s-designer-backend/issues"
+  },
+  "homepage": "https://github.com/tech-university-india/k8s-designer-backend#readme"
+}
