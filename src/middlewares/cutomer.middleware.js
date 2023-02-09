@@ -1,4 +1,5 @@
 const joi = require('joi');
+const httpConstants = require('http2').constants;
 
 const querySchema = joi.object({
   customerId: joi.number()
@@ -10,7 +11,7 @@ const validationTest = (req, res, next) => {
     next();
   }
   else {
-    res.status(400).json({ message: 'Error! Check query parameter' });
+    res.status(httpConstants.HTTP_STATUS_BAD_REQUEST).json({ message: 'Error! Check query parameter' });
   }
 };
 
