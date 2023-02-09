@@ -7,7 +7,7 @@ const getCustomerOrderDetails = async (req, res) => {
     //fetch single user data
     if (req.query.customerId) {
       const customerData = await services.getCustomerData(req.query.customerId);
-      if (customerData === undefined) throw new httpError('No user data found', httpConstants.HTTP_STATUS_NOT_FOUND);
+      if (customerData.length === 0) throw new httpError('No user data found', httpConstants.HTTP_STATUS_NOT_FOUND);
       res.status(httpConstants.HTTP_STATUS_OK).json(customerData);
     }
 

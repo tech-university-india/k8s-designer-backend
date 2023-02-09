@@ -73,7 +73,8 @@ describe('Test for Controller', () => {
             customerId: 1280
           }
         };
-        jest.spyOn(services, 'getCustomerData').mockResolvedValue();
+        const mockResult = [];
+        jest.spyOn(services, 'getCustomerData').mockResolvedValue(mockResult);
         await controllers.getCustomerOrderDetails(mockReq, mockRes);
         expect(mockRes.status).toBeCalledWith(httpConstants.HTTP_STATUS_NOT_FOUND);
         expect(mockRes.json).toBeCalledWith({ message: 'No user data found' });
