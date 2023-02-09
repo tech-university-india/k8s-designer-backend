@@ -1,8 +1,8 @@
 const data = require('../../input.json');
 
-const getData = () => data.log;
+const getCustomersData = () => data.log;
 
-const getUserData = customerId => {
+const getCustomerData = customerId => {
   for (const record of data.log) {
     if (record.customerId == customerId) {
       return record;
@@ -10,4 +10,4 @@ const getUserData = customerId => {
   }
 };
 
-module.exports = { getData, getUserData };
+module.exports = { getCustomersData, getCustomerData };
