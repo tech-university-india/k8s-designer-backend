@@ -1,4 +1,4 @@
-const services = require('../../src/services/app');
+const services = require('../../src/services/customer.services');
 
 describe('Test for Services', () => {
   describe('Test GET API', () => {
@@ -29,7 +29,7 @@ describe('Test for Services', () => {
         }
       ];
       it('Should return customer orders', () => {
-        expect(services.getData()).toEqual(serviceResponse);
+        expect(services.getCustomersData()).toEqual(serviceResponse);
       });
     });
 
@@ -49,7 +49,7 @@ describe('Test for Services', () => {
       };
       const customerId = 1;
       it(`Should return customer ${customerId} order`, () => {
-        expect(services.getUserData(customerId)).toEqual(serviceResponse);
+        expect(services.getCustomerData(customerId)).toEqual(serviceResponse);
       });
     });
   });

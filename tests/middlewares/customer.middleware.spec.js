@@ -1,4 +1,5 @@
-const { validationTest } = require('../../src/middlewares/index');
+const { validationTest } = require('../../src/middlewares/cutomer.middleware');
+const httpConstants = require('http2').constants;
 
 describe('Validate Middleware', () => {
   it('Should move to next middleware if valid', () => {
@@ -28,7 +29,7 @@ describe('Validate Middleware', () => {
     };
     const mockNext = jest.fn();
     validationTest(mockReq, mockRes, mockNext);
-    expect(mockRes.status).toBeCalledWith(400);
+    expect(mockRes.status).toBeCalledWith(httpConstants.HTTP_STATUS_BAD_REQUEST);
     expect(mockRes.json).toBeCalledWith({
       message: 'Error! Check query parameter'
     });

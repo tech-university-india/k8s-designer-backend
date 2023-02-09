@@ -1,5 +1,6 @@
-const controllers = require('../../src/controllers/app');
-const services = require('../../src/services/app');
+const httpConstants = require('http2').constants;
+const controllers = require('../../src/controllers/customer.controller');
+const services = require('../../src/services/customer.services');
 
 describe('Test for Controller', () => {
   describe('Test GET /ping API', () => {
@@ -28,15 +29,15 @@ describe('Test for Controller', () => {
             },
             'isComplete': false
           },];
-        jest.spyOn(services, 'getData').mockResolvedValue(mockResult);
-        await controllers.getData(mockReq, mockRes);
-        expect(mockRes.status).toBeCalledWith(200);
+        jest.spyOn(services, 'getCustomersData').mockResolvedValue(mockResult);
+        await controllers.getCustomerOrderDetails(mockReq, mockRes);
+        expect(mockRes.status).toBeCalledWith(httpConstants.HTTP_STATUS_OK);
         expect(mockRes.json).toBeCalledWith(mockResult);
       });
       it('Should return 404 if no data returned', async () => {
-        jest.spyOn(services, 'getData').mockResolvedValue();
-        await controllers.getData(mockReq, mockRes);
-        expect(mockRes.status).toBeCalledWith(404);
+        jest.spyOn(services, 'getCustomersData').mockResolvedValue();
+        await controllers.getCustomerOrderDetails(mockReq, mockRes);
+        expect(mockRes.status).toBeCalledWith(httpConstants.HTTP_STATUS_NOT_FOUND);
         expect(mockRes.json).toBeCalledWith({ message: 'No data found' });
       });
     });
@@ -61,9 +62,9 @@ describe('Test for Controller', () => {
             },
             'isComplete': false
           },];
-        jest.spyOn(services, 'getUserData').mockResolvedValue(mockResult);
-        await controllers.getData(mockReq, mockRes);
-        expect(mockRes.status).toBeCalledWith(200);
+        jest.spyOn(services, 'getCustomerData').mockResolvedValue(mockResult);
+        await controllers.getCustomerOrderDetails(mockReq, mockRes);
+        expect(mockRes.status).toBeCalledWith(httpConstants.HTTP_STATUS_OK);
         expect(mockRes.json).toBeCalledWith(mockResult);
       });
       it('Should return 404 if no data returned', async () => {
@@ -72,9 +73,9 @@ describe('Test for Controller', () => {
             customerId: 1280
           }
         };
-        jest.spyOn(services, 'getUserData').mockResolvedValue();
-        await controllers.getData(mockReq, mockRes);
-        expect(mockRes.status).toBeCalledWith(404);
+        jest.spyOn(services, 'getCustomerData').mockResolvedValue();
+        await controllers.getCustomerOrderDetails(mockReq, mockRes);
+        expect(mockRes.status).toBeCalledWith(httpConstants.HTTP_STATUS_NOT_FOUND);
         expect(mockRes.json).toBeCalledWith({ message: 'No user data found' });
       });
     });
