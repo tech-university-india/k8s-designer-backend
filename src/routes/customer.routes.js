@@ -3,6 +3,6 @@ const controller = require('../controllers/customer.controller');
 const middlewares = require('../middlewares/cutomer.middleware');
 
 routes.route('/ping')
-  .get(middlewares.validationTest, controller.getCustomerOrderDetails);
+  .get(middlewares.validationSchema('customerIdSchema'), controller.getCustomerOrderDetails);
 
 module.exports = routes;
