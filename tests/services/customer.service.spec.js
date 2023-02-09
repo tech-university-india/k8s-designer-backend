@@ -34,7 +34,7 @@ describe('Test for Services', () => {
     });
 
     describe('To fetch data of single user', () => {
-      const serviceResponse = {
+      const serviceResponse = [{
         'customerId': 1,
         'order': {
           'snacks': [
@@ -46,7 +46,7 @@ describe('Test for Services', () => {
           ]
         },
         'isComplete': false
-      };
+      }];
       const customerId = 1;
       it(`Should return customer ${customerId} order`, () => {
         expect(services.getCustomerData(customerId)).toEqual(serviceResponse);
