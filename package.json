@@ -4,7 +4,11 @@
   "description": "Standalone Backend Boilerplate using NodeJS and Express",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test-coverage": "concurrently 'npx jest tests' 'npx jest --coverage'",
+    "start": "node index.js",
+    "linting": "npx eslint --fix .",
+    "nodemon": "nodemon index.js"
   },
   "keywords": [
     "microservice",
@@ -15,6 +19,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "eslint": "^8.33.0"
   },
   "dependencies": {
