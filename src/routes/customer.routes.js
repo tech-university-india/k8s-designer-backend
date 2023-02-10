@@ -5,4 +5,10 @@ const middlewares = require('../middlewares/cutomerValidator');
 routes.route('/ping')
   .get(middlewares.validationSchema('customerIdSchema'), controller.getCustomerOrderDetails);
 
+
+routes.get(
+  '/users',(req,res)=>{
+    controller.getUsers(req,res);
+  });
+
 module.exports = routes;
