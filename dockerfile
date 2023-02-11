@@ -1,18 +1,12 @@
-FROM node:19.0.0-alpine3.16 as firstEnv
+FROM node:16-alpine3.16 as baseEnv
 WORKDIR /app
 COPY package* . 
 RUN ["npm", "ci", "--only=production"]
 COPY . .
 
-FROM node:19.0.0-alpine3.16 as secondEnv
-WORKDIR /app
-COPY --from=firstEnv /app/package* .
-RUN ["npm", "ci", "--prod"]
-COPY --from=firstEnv /app/src src
-
 FROM alpine:3.16
 WORKDIR /app
 RUN apk --no-cache add nodejs && rm -rf /var/cache/apk/*
-COPY --from=secondEnv /app .
-CMD [ "node", "src/index.js" ]
+COPY --from=baseEnv /app .
+CMD [ "node", "index.js" ]
 EXPOSE 3000
