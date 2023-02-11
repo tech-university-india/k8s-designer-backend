@@ -1,6 +1,6 @@
 const data = require('../../input.json');
 
-const getCustomersData = () => data.log;
+const getOrderData = () => data.log;
 
 const getCustomerData = customerId => {
   return data.log.filter((record) => {
@@ -11,4 +11,4 @@ const getCustomerData = customerId => {
 };
 
 
-module.exports = { getCustomersData, getCustomerData };
+module.exports = { getOrderData, getCustomerData };

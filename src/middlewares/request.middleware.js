@@ -1,9 +1,8 @@
 const httpConstants = require('http2').constants;
-const schemas = require('../schemas/index.schema');
 
-const validationSchema = (validateSchema) => {
+const validate = (requestSchema) => {
   return (req, res, next) => {
-    const { error } = schemas[validateSchema]().validate(req.query);
+    const { error } = requestSchema.validate(req.params);
     if (!error) {
       next();
     }
@@ -13,4 +12,4 @@ const validationSchema = (validateSchema) => {
   };
 };
 
-module.exports = { validationSchema };
+module.exports = { validate };
