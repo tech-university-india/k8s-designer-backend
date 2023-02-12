@@ -1,4 +1,4 @@
 //import schemas here
-const { customerIdSchema } = require('./customerId.schema');
+const { customerSchema } = require('./customer.schema');
 
-module.exports = { customerIdSchema };
+module.exports = { customerSchema };

@@ -1,50 +1,42 @@
-const { validationSchema } = require('../../src/middlewares/cutomer.middleware');
+const { validate } = require('../../src/middlewares/request.middleware');
 const httpConstants = require('http2').constants;
+const schemas = require('../../src/schemas/index.schema');
 
 describe('Validate Middleware', () => {
-  describe('Validate customerId Schema', () => {
-    const schema = 'customerIdSchema';
+  describe('Validate customer Schema', () => {
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn()
+    };
+    const mockNext = jest.fn();
     it('Should move to next middleware if valid', () => {
       const mockReq = {
-        query: {
-          customerId: 1
+        params: {
+          customer_id: 1
         }
       };
-      const mockRes = {
-        status: jest.fn().mockReturnThis(),
-        json: jest.fn()
-      };
-      const mockNext = jest.fn();
-      validationSchema(schema)(mockReq, mockRes, mockNext);
+      validate(schemas.customerSchema)(mockReq, mockRes, mockNext);
       expect(mockNext).toBeCalled();
     });
 
-    it('Should give error message if invalid query parameter', () => {
+    it('Should give error message if query parameter is of invalid type', () => {
       const mockReq = {
-        query: {
-          customerId: 'string',
+        params: {
+          customer_id: 'string',
         },
       };
-      const mockRes = {
-        status: jest.fn().mockReturnThis(),
-        json: jest.fn()
-      };
-      const mockNext = jest.fn();
-      validationSchema(schema)(mockReq, mockRes, mockNext);
+      validate(schemas.customerSchema)(mockReq, mockRes, mockNext);
       expect(mockRes.status).toBeCalledWith(httpConstants.HTTP_STATUS_BAD_REQUEST);
       expect(mockRes.json).toBeCalledWith({
         message: 'Error! Check query parameter'
       });
     });
 
-    it('Should give error message if query parameter is of invalid type', () => {
-      const mockReq = {};
-      const mockRes = {
-        status: jest.fn().mockReturnThis(),
-        json: jest.fn()
+    it('Should give error message if no query parameter passed', () => {
+      const mockReq = {
+        params: {}
       };
-      const mockNext = jest.fn();
-      validationSchema(schema)(mockReq, mockRes, mockNext);
+      validate(schemas.customerSchema)(mockReq, mockRes, mockNext);
       expect(mockNext).toBeCalled();
     });
   });

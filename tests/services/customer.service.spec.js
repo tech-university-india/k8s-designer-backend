@@ -1,8 +1,8 @@
-const services = require('../../src/services/customer.services');
+const services = require('../../src/services/customer.service');
 
 describe('Test for Services', () => {
   describe('Test GET API', () => {
-    describe('To fetch data of all users', () => {
+    describe('To fetch data of all orders', () => {
       const serviceResponse = [
         {
           'customerId': 1,
@@ -28,12 +28,12 @@ describe('Test for Services', () => {
           'isComplete': false
         }
       ];
-      it('Should return customer orders', () => {
-        expect(services.getCustomersData()).toEqual(serviceResponse);
+      it('Should return all orders', () => {
+        expect(services.getOrderData()).toEqual(serviceResponse);
       });
     });
 
-    describe('To fetch data of single user', () => {
+    describe('To fetch data of a single customer', () => {
       const serviceResponse = [{
         'customerId': 1,
         'order': {
