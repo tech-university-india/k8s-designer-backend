@@ -1,17 +1,6 @@
-const services = require('../services/customer.services');
-const httpError = require('../exceptions/customError');
+const services = require('../services/customer.service');
+const httpError = require('../exceptions/customer.exception');
 const httpConstants = require('http2').constants;
-
-
-const getUsers = async (req, res) => {
-  try{
-    const users = await services.getUsers();
-    if (users === undefined) throw new httpError('No data found', httpConstants.HTTP_STATUS_NOT_FOUND);
-    res.status(httpConstants.HTTP_STATUS_OK).json(users);
-  }
-  catch (error) {
-    res.status(error.status).json({ message: error.message });
-  }
 
 const getOrderDetails = async (req, res) => {
   try {
@@ -35,5 +24,4 @@ const getCustomerOrderDetails = async (req, res) => {
   }
 };
 
-
-module.exports = { getOrderDetails, getCustomerOrderDetails ,getUsers};
+module.exports = { getOrderDetails, getCustomerOrderDetails };
