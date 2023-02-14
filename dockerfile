@@ -7,6 +7,6 @@ COPY . .
 FROM alpine:3.16
 WORKDIR /app
 RUN apk --no-cache add nodejs && rm -rf /var/cache/apk/*
-COPY --from=baseEnv /app ./
+COPY --from=baseEnv /app .
 CMD [ "node", "index.js" ]
 EXPOSE 3000
