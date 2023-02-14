@@ -27,7 +27,7 @@ jobs:
       - name: Lint code
         run: npm run linting
       - name: Test code
-        run: npm run test
+        run: npm run test-coverage
       - name: Build website
         run: echo "Building website..."
 
