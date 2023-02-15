@@ -10,7 +10,7 @@
     "linting": "npx eslint --fix .",
     "nodemon": "nodemon index.js"
   },
-  "prisma":{
+  "prisma": {
     "seed": "node prisma/seed.js"
   },
   "keywords": [
@@ -31,8 +31,8 @@
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
+    "archiver": "^5.3.1",
     "express": "^4.18.2",
     "joi": "^17.7.0"
   }
 }
-
