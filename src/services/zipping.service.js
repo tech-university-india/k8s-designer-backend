@@ -2,8 +2,8 @@ const archiver = require('archiver');
 const fs = require('fs');
 const path = require('path');
 
-function zipFolder(folderPath) {
-  const outputFilePath = path.resolve('output.zip');
+function zipFolder(folderPath, outputPath) {
+  const outputFilePath = path.resolve(outputPath);
 
   return new Promise((resolve, reject) => {
     console.log(`Creating zip file for folder: ${folderPath}`);
@@ -48,11 +48,6 @@ function zipFolder(folderPath) {
   });
 }
 
-// Usage:
-zipFolder('src/services/abcd')
-  .then((outputFilePath) => {
-    console.log(`Zip file created at ${outputFilePath}`);
-  })
-  .catch((err) => {
-    console.error(`Error creating zip file: ${err}`);
-  });
+module.exports = {
+  zipFolder
+};
