@@ -1,16 +1,8 @@
 const mustache = require('mustache');
-const fs = require('fs');
+const fs = require('fs').promises;
 const serviceTemplatePaths = require('../../constants/serviceTemplatePaths');
 
-const readTemplate = (path) => {
-    return fs.promises.readFile(path, 'utf-8')
-}
-
-const writeDockerCompose = (path, data) => {
-    return fs.promises.writeFile(path, data, 'utf-8')
-}
-
-const dockerComposeGenerator = (projectId, serviceType, config) => {
+const dockerComposeGenerator = async (projectId, serviceType, config) => {
     try {
         const templatePath = serviceTemplatePaths[serviceType];
 
@@ -18,20 +10,21 @@ const dockerComposeGenerator = (projectId, serviceType, config) => {
             throw new Error(`Invalid service type: ${serviceType}`);
         }
 
-        const projectDir = __dirname+`/../../constants/tmp/${projectId}`;
+        const projectDir = __dirname + `/../../constants/tmp/${projectId}`;
 
-        if (!fs.existsSync(projectDir)) {
-            fs.mkdirSync(projectDir);
+        try {
+            await fs.access(projectDir);
+        } catch(err) {
+            await fs.mkdir(projectDir);
         }
 
-        const dockerComposePath = projectDir+'/docker-compose.yaml';
+        const dockerComposePath = projectDir + '/docker-compose.yaml';
 
-        readTemplate(templatePath)
-            .then(template => mustache.render(template, config))
-            .then(dockerComposeFile => writeDockerCompose(dockerComposePath, dockerComposeFile))
-            .catch(err => console.log(err.message))
+        const template = await fs.readFile(templatePath, 'utf8');
+        const dokcerComposeFile = mustache.render(template, config);
+        await fs.writeFile(dockerComposePath, dokcerComposeFile, 'utf-8');
     } catch (err) {
-        console.error(err);
+        console.error(err.message);
     }
 }
 
