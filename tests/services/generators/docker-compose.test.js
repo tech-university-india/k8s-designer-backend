@@ -1,5 +1,5 @@
 const fs = require('fs');
-const {dockerComposeGenerator} = require('../../../src/services/dockerComposeGenerator/frontendStandalone');
+const {dockerComposeGenerator} = require('../../../src/services/generators/docker-compose');
 
 describe('dockerComposeGenerator', () => {
     const mockFrontendConfig = {
@@ -13,7 +13,7 @@ describe('dockerComposeGenerator', () => {
         replicas: 3
     };
 
-    const expectedDockerComposeFile = fs.readFileSync(__dirname+'/expected-docker-compose.yml', 'utf-8');
+    const expectedDockerComposeFile = fs.readFileSync(__dirname+'/../../mocks/docker-compose/mock-frontend.yaml', 'utf-8');
 
     it('should generate the expected Docker Compose file from the given configuration', () => {
         const generatedDockerComposeFile = dockerComposeGenerator(mockFrontendConfig);
