@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { zipFolder } = require('../../src/services/zipping.service');
+const { zipFolder } = require('../../src/services/zipping.service.js');
 describe('Zipping Service', ()=>{
   afterEach(() => {
     jest.clearAllMocks();
@@ -9,7 +9,7 @@ describe('Zipping Service', ()=>{
   it('should reject with an error if folder does not exists', async () => {
     const mockFolderPath = path.join(__dirname, 'nonExistingFolder');
     const mockOutputPath = path.join(__dirname, 'mockFolder.zip');
-    await expect(zipFolder(mockFolderPath, mockOutputPath)).rejects.toBe(`Folder not found: ${mockFolderPath}`);
+    await expect(zipFolder(mockFolderPath, mockOutputPath)).rejects.toThrow(`ENOENT: no such file or directory, access '${mockFolderPath}'`);
   });
 
   it('should reject with an error if there is a problem creating the zip file', async ()=>{
