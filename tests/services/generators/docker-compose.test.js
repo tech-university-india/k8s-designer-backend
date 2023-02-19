@@ -1,9 +1,12 @@
 const fs = require('fs').promises;
 const path = require('path');
-const serviceTemplatePaths = require('../../../src/constants/serviceTemplatePaths');
+const {TEMPLATE_PATH, UTF8_ENCODING, TEMP_PATH} = require('../../../src/constants/app.constants');
 const dockerComposeGenerator = require('../../../src/services/generators/docker-compose.js');
+const InvalidServiceTypeException = require('../../../src/exceptions/InvalidServiceTypeException');
+const ProjectDirectoryNotFoundException = require('../../../src/exceptions/ProjectDirectoryNotFoundException');
 
 const projectId = 1;
+const invalidProjectId='999';
 
 const serviceType = 'FRONTEND';
 const invalidServiceType = 'INVALID_SERVICE_TYPE';
@@ -20,14 +23,12 @@ const config = {
 }
 
 describe('dockerComposeGenerator', () => {
-    const mockAccess = jest.fn();
-    const mockMkdir = jest.fn();
+    const mockStat = jest.fn();
     const mockReadFile = jest.fn();
     const mockWriteFile = jest.fn();
 
     beforeAll(() => {
-        jest.spyOn(fs, 'access').mockImplementation(mockAccess);
-        jest.spyOn(fs, 'mkdir').mockImplementation(mockMkdir);
+        jest.spyOn(fs, 'stat').mockImplementation(mockStat);
         jest.spyOn(fs, 'readFile').mockImplementation(mockReadFile);
         jest.spyOn(fs, 'writeFile').mockImplementation(mockWriteFile);
     });
@@ -41,8 +42,8 @@ describe('dockerComposeGenerator', () => {
     });
 
     it('should generate a docker-compose.yaml file', async () => {
-        const templatePath = serviceTemplatePaths[serviceType];
-        const projectDir = path.join(__dirname, `../../../src/constants/tmp/${projectId}`);
+        const templatePath = TEMPLATE_PATH[serviceType];
+        const projectDir = path.join(TEMP_PATH, projectId.toString());
         const dockerComposePath = path.join(projectDir, 'docker-compose.yaml');
 
         const template = 
@@ -76,29 +77,31 @@ describe('dockerComposeGenerator', () => {
                 replicas: 3
             `;
 
+        const mockedStats = {size: 1024};
+        mockStat.mockResolvedValue(mockedStats);
+
         mockReadFile.mockResolvedValue(template);
 
         await dockerComposeGenerator(projectId, serviceType, config);
 
-        expect(mockAccess).toHaveBeenCalledWith(projectDir);
-        
-        if(mockMkdir.mock.calls.length === 1) {
-            expect(mockMkdir).toHaveBeenCalledWith(projectDir);
-        }
-
-        expect(mockReadFile).toHaveBeenCalledWith(templatePath, 'utf-8');
-        expect(mockWriteFile).toHaveBeenCalledWith(dockerComposePath, expectedDockerComposeFile, 'utf-8');
+        expect(mockStat).toHaveBeenCalledWith(projectDir);
+        expect(mockReadFile).toHaveBeenCalledWith(templatePath, UTF8_ENCODING);
+        expect(mockWriteFile).toHaveBeenCalledWith(dockerComposePath, expectedDockerComposeFile, UTF8_ENCODING);
     });
 
-    it('should throw an error if the service type is invalid', async () => {
-        try {
-            await expect(dockerComposeGenerator(projectId, invalidServiceType, config));
-        } catch(err) {
-            expect(err.message).toBe('Invalid service type: INVALID_SERVICE_TYPE');
-        }
+    it('should throw an InvalidServiceTypeError if the service type is invalid', async () => {
+        await expect(dockerComposeGenerator(projectId, invalidServiceType, config)).rejects.toThrow(InvalidServiceTypeException);
 
-        expect(mockAccess).not.toHaveBeenCalled();
-        expect(mockMkdir).not.toHaveBeenCalled();
+        expect(mockStat).not.toHaveBeenCalled();
+        expect(mockReadFile).not.toHaveBeenCalled();
+        expect(mockWriteFile).not.toHaveBeenCalled();
+    });
+
+    it('should throw a ProjectDirectoryNotFoundError if the project directory does not exist', async () => {
+        mockStat.mockRejectedValue(new ProjectDirectoryNotFoundException(invalidProjectId));
+
+        await expect(dockerComposeGenerator(invalidProjectId, serviceType, config)).rejects.toThrow(ProjectDirectoryNotFoundException);
+
         expect(mockReadFile).not.toHaveBeenCalled();
         expect(mockWriteFile).not.toHaveBeenCalled();
     });

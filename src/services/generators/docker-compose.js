@@ -1,31 +1,33 @@
 const mustache = require('mustache');
 const fs = require('fs').promises;
 const path = require('path');
-const serviceTemplatePaths = require('../../constants/serviceTemplatePaths');
+const {TEMPLATE_PATH, UTF8_ENCODING, TEMP_PATH} = require('../../constants/app.constants');
+const InvalidServiceTypeException = require('../../exceptions/InvalidServiceTypeException');
+const ProjectDirectoryNotFoundException = require('../../exceptions/ProjectDirectoryNotFoundException');
 
 const dockerComposeGenerator = async (projectId, serviceType, config) => {
     try {
-        const templatePath = serviceTemplatePaths[serviceType];
+        const templatePath = TEMPLATE_PATH[serviceType];
 
         if (!templatePath) {
-            throw new Error(`Invalid service type: ${serviceType}`);
+            throw new InvalidServiceTypeException(serviceType);
         }
 
-        const projectDir = path.join(__dirname, `../../constants/tmp/${projectId}`);
+        const projectDir = path.join(TEMP_PATH, projectId.toString());
 
         try {
-            await fs.access(projectDir);
+            await fs.stat(projectDir);
         } catch(err) {
-            await fs.mkdir(projectDir);
+            throw new ProjectDirectoryNotFoundException(projectDir);
         }
 
         const dockerComposePath = path.join(projectDir, 'docker-compose.yaml');
 
-        const template = await fs.readFile(templatePath, 'utf-8');
+        const template = await fs.readFile(templatePath, UTF8_ENCODING);
         const dockerComposeFile = mustache.render(template, config);
-        await fs.writeFile(dockerComposePath, dockerComposeFile, 'utf-8');
+        await fs.writeFile(dockerComposePath, dockerComposeFile, UTF8_ENCODING);
     } catch (err) {
-        console.error(err.message);
+        throw err;
     }
 }
 
