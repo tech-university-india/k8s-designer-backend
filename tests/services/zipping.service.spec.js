@@ -14,6 +14,7 @@ describe('Zipping Service', ()=>{
   it('should reject with an error if folder does not exists', async () => {
     const mockFolderPath = path.join(__dirname, 'nonExistingFolder');
     const mockOutputPath = path.join(__dirname, 'mockFolder.zip');
+    jest.spyOn(folderUtility, 'doesFolderExist').mockRejectedValue(new Error(`ENOENT: no such file or directory, access '${mockFolderPath}'`));
     await expect(zipFolder(mockFolderPath, mockOutputPath)).rejects.toThrow(`ENOENT: no such file or directory, access '${mockFolderPath}'`);
   });
 
@@ -28,9 +29,9 @@ describe('Zipping Service', ()=>{
 
   it('should zip a folder and return the archive details', async () => {
     const mockOutputPath = path.join(__dirname, 'output.zip');
-
     jest.spyOn(folderUtility, 'doesFolderExist').mockResolvedValue(true); 
     jest.spyOn(archive, 'pipe').mockResolvedValue('Success'); 
+    jest.spyOn(archive, 'directory').mockResolvedValue(true);
     jest.spyOn(archive, 'finalize').mockResolvedValue(true); 
 
     const mReadStream = {
