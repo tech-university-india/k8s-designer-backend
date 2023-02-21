@@ -4,7 +4,7 @@ const archive = require('../config/archiver.config.js');
 const folderUtility= require('../utility/folder.utility.js');
 
 
-function zipFolder(folderPath, outputPath) {
+const zipFolder=(folderPath, outputPath)=> {
   const outputFilePath = path.resolve(outputPath);
     
   return new Promise((resolve, reject) => {
@@ -26,7 +26,7 @@ function zipFolder(folderPath, outputPath) {
       reject(err);
     });
   });
-}
+};
 
 module.exports = {
   zipFolder
