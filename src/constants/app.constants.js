@@ -1,14 +1,22 @@
 const path = require('path');
 
-const TEMPLATE_PATH = {
-    FRONTEND: path.join(__dirname, '/../templates/docker-compose/frontend.mustache')
-}
+require('dotenv').config();
 
-const UTF8_ENCODING='utf8';
-const TEMP_PATH = path.join(__dirname, '../../tmp');
+const PROJECT_ROOT = process.env.PROJECT_ROOT;
+
+const TEMPLATE_PATH = {
+  FRONTEND: path.join(
+    PROJECT_ROOT,
+    'src/templates/docker-compose/frontend.mustache'
+  ),
+};
+
+const UTF8_ENCODING = 'utf8';
+const OUTPUT_PATH = path.join(PROJECT_ROOT, 'tmp');
 
 module.exports = {
-    TEMPLATE_PATH,
-    UTF8_ENCODING,
-    TEMP_PATH
+  PROJECT_ROOT,
+  TEMPLATE_PATH,
+  UTF8_ENCODING,
+  OUTPUT_PATH,
 };
