@@ -1,5 +1,5 @@
-const services = require('../services/customer.service');
-const httpError = require('../exceptions/customer.exception');
+const services = require('../services/user.service');
+const httpError = require('../exceptions/user.exception');
 const httpConstants = require('http2').constants;
 
 const getOrderDetails = async (req, res) => {
@@ -24,4 +24,18 @@ const getCustomerOrderDetails = async (req, res) => {
   }
 };
 
-module.exports = { getOrderDetails, getCustomerOrderDetails };
+const postNewUser= async(req,res)=>{
+  try{
+    const body = req.body;
+    const result = services.postUser(body);
+    res.send(result);
+  }
+  catch(err){
+    if (err instanceof httpError) {
+      return res.status(err.code).send({ message: err.message });
+    }
+    res.status(500).send(err.message);
+  }
+};
+
+module.exports = { getOrderDetails, getCustomerOrderDetails,postNewUser };

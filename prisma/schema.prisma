@@ -2,19 +2,63 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
   extensions = [pgcrypto]
 }
 
 model User {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  fullName String @map("full_name")
-  email     String @unique
+  id       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  fullName String   @map("full_name")
+  email    String   @unique
+  Project  Project?
+
   @@map("users")
+}
+
+model Project {
+  id                   String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user                 User                  @relation(fields: [userId], references: [id])
+  userId               String                @unique @db.Uuid
+  ProjectServiceConfig ProjectServiceConfig?
+}
+
+model ProjectServiceConfig {
+  id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  serviceType ServiceType @default(FrontEnd)
+
+  service   FrontendService @relation(fields: [serviceId], references: [id])
+  serviceId String          @db.Uuid
+
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId String   @unique @db.Uuid
+}
+
+model FrontendService {
+  id                   String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  reactVersion         String
+  port                 String
+  numberOfReplicas     Int
+  name                 String
+  envVariables         EnvVariables[]
+  projectServiceConfig ProjectServiceConfig[]
+}
+
+model EnvVariables {
+  id                 String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  field              String
+  value              String
+  frontendService    FrontendService @relation(fields: [frontendServicesId], references: [id])
+  frontendServicesId String          @db.Uuid
+}
+
+enum ServiceType {
+  FrontEnd
+  BackEnd
+  Database
 }

@@ -10,5 +10,8 @@ const getCustomerData = customerId => {
   });
 };
 
+const postUser=(body)=>{
+  // const {body}
 
-module.exports = { getOrderData, getCustomerData };
+};
+module.exports = { getOrderData, getCustomerData ,postUser};
