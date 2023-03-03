@@ -22,6 +22,7 @@ const setMicroservicesConfigService = async (data) =>{
       );
 
       const frontendServicesId =  frontendServicesResult.id;
+      
       const envVariablesResult = await prisma.EnvVariables.create(
         {data:
           {field:customEnv.field,
@@ -35,17 +36,17 @@ const setMicroservicesConfigService = async (data) =>{
             serviceType:service_type,
             serviceId:frontendServicesId,
             //Considered dummy static value for project Id as Project Id has to be taken from JWT token
-            projectId:'3df6bbd4-de24-465c-9080-1b3673d1d749' 
+            projectId:'3df6bbd4-de24-465c-9080-1b3673d1d742' 
           }
         }
       );
 
-      return projectServiceConfigResult;
+      //return projectServiceConfigResult;
     }
     }
   });
 
-
+  return data;
   
 };
 
