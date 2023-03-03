@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  frontend:
+    name: "{{name}}"
+    ports: 
+      - "{{port}}:{{internalPort}}"
+    environment: 
+      {{#environment}}
+      {{name}}: "{{{value}}}"
+      {{/environment}}
+    deploy: 
+      replicas: {{replicas}}
+      

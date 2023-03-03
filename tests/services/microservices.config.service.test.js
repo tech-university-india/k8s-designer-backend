@@ -1,32 +1,64 @@
-const { PrismaClient } = require('@prisma/client');
+const {PrismaClient} = require('@prisma/client');
 const services = require('../../src/services/microservices.config.service.js');
 
-const prisma = new PrismaClient();
+jest.mock('@prisma/client');
 
 describe('microservices  service  testing', () => {
   it('should populate microservice table ', async () => {
-    jest.mock('@prisma/client');
-    jest.spyOn(prisma.FrontendService, 'create').mockResolvedValueOnce(
-      {'id':1,
-        'reactVersion': '2.08',
-        'port':'5432',
-        'numberOfReplicas':5,
-        'name':'React Todo App'}
-    );
-    jest.spyOn(prisma.EnvVariables, 'create').mockResolvedValueOnce(
-      {'id':2,
-        'field': 'port',
-        'value':'2345',
-        'frontendServicesId':1}
-    );
-    jest.spyOn(prisma.ProjectServiceConfig, 'create').mockResolvedValueOnce(
-      {
-        'id':3,
-        'serviceType':'FrontEnd',
-        'serviceId':1,
-        'projectId':'3df6bbd4-de24-465c-9080-1b3673d1d74'}
 
-    );
+    const mockFsCreate = jest.fn();
+    const mockEvCreate = jest.fn();
+    const mockPsCreate = jest.fn();
+
+    PrismaClient.mockReturnValue({
+      FrontendService: {
+        create: mockFsCreate.mockResolvedValueOnce({
+          'id':1,
+          'reactVersion': '2.08',
+          'port':'5432',
+          'numberOfReplicas':5,
+          'name':'React Todo App'
+        }),
+      },
+      EnvVariables: {
+        create: mockEvCreate.mockResolvedValueOnce({
+          'id':2,
+          'field': 'port',
+          'value':'2345',
+          'frontendServicesId':1
+        })
+      },
+      ProjectServiceConfig: {
+        create: mockPsCreate.mockResolvedValueOnce({
+          'id':3,
+          'serviceType':'FrontEnd',
+          'serviceId':1,
+          'projectId':'3df6bbd4-de24-465c-9080-1b3673d1d742'
+        })
+      }
+    });
+
+    // jest.spyOn(prisma.FrontendService, 'create').mockResolvedValueOnce(
+    //   {'id':1,
+    //     'reactVersion': '2.08',
+    //     'port':'5432',
+    //     'numberOfReplicas':5,
+    //     'name':'React Todo App'}
+    // );
+    // jest.spyOn(prisma.EnvVariables, 'create').mockResolvedValueOnce(
+    //   {'id':2,
+    //     'field': 'port',
+    //     'value':'2345',
+    //     'frontendServicesId':1}
+    // );
+    // jest.spyOn(prisma.ProjectServiceConfig, 'create').mockResolvedValueOnce(
+    //   {
+    //     'id':3,
+    //     'serviceType':'FrontEnd',
+    //     'serviceId':1,
+    //     'projectId':'3df6bbd4-de24-465c-9080-1b3673d1d74'}
+
+    // );
     const mockreq = {body:{'services':[
       {
         'service_type': 'FrontEnd',
@@ -58,6 +90,36 @@ describe('microservices  service  testing', () => {
         }
       }
     ]});
+
+    expect(mockFsCreate).toHaveBeenCalledTimes(1);
+    expect(mockEvCreate).toHaveBeenCalledTimes(1);
+    expect(mockPsCreate).toHaveBeenCalledTimes(1);
+
+    expect(mockFsCreate).toHaveBeenCalledWith({
+      data: {
+        'reactVersion': '2.08',
+        'port':'5432',
+        'numberOfReplicas':5,
+        'name':'React Todo App'
+      }
+    });
+
+    expect(mockEvCreate).toHaveBeenCalledWith({
+      data: {
+        'field': 'port',
+        'value':'2345',
+        'frontendServicesId':1
+      }
+    });
+
+    expect(mockPsCreate).toHaveBeenCalledWith({
+      data: { 
+        'serviceType':'FrontEnd',
+        'serviceId':1,
+        'projectId':'3df6bbd4-de24-465c-9080-1b3673d1d74'
+      }
+    });
+
   });
 });
 

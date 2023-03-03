@@ -1,12 +1,12 @@
 // const models = require('../../prisma/schema.prisma');
-const { PrismaClient } = require('@prisma/client');
+const {PrismaClient} = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
 const setMicroservicesConfigService = async (data) =>{
   const {services} = data;
 
-  services.forEach(async (service)=>{
+  for (let service of services) {
     switch(service.service_type)
     {
     case 'FrontEnd':
@@ -20,15 +20,14 @@ const setMicroservicesConfigService = async (data) =>{
             port:configurations.port}
         }
       );
-
       const frontendServicesId =  frontendServicesResult.id;
-      
       const envVariablesResult = await prisma.EnvVariables.create(
         {data:
           {field:customEnv.field,
             value:customEnv.value, 
             frontendServicesId
           }});
+      
 
       const projectServiceConfigResult = await prisma.ProjectServiceConfig.create(
         {data:
@@ -40,12 +39,13 @@ const setMicroservicesConfigService = async (data) =>{
           }
         }
       );
-
+      // await Promise.all([frontendServicesResult, envVariablesResult, projectServiceConfigResult]);
       //return projectServiceConfigResult;
-    }
-    }
-  });
 
+    }
+    }
+  }
+  
   return data;
   
 };
