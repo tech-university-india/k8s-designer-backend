@@ -1,8 +1,7 @@
 version: '3'
 
 services:
-  frontend-application:
-    # name: "frontend-application"
+  frontend:
     image: nginx:latest
     ports: 
       - "3000:3000"
