@@ -30,6 +30,8 @@ const dockerComposeGenerator = async (projectId, serviceType, config) => {
     const template = await fs.readFile(templatePath, UTF8_ENCODING);
     const dockerComposeFile = mustache.render(template, config);
     await fs.writeFile(dockerComposePath, dockerComposeFile, UTF8_ENCODING);
+
+    return dockerComposePath;
   } catch (err) {
     throw err;
   }
