@@ -8,7 +8,8 @@
     "test-coverage": "concurrently 'npx jest tests' 'npx jest --coverage'",
     "start": "node index.js",
     "linting": "npx eslint --fix .",
-    "nodemon": "nodemon index.js"
+    "nodemon": "nodemon index.js",
+    "build": "echo 'building...'"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
