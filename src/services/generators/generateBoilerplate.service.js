@@ -1,8 +1,11 @@
-const { spawn } = require('child_process');
+const childProcess = require('child_process');
+const path = require('path');
+const { OUTPUT_PATH } = require('../../constants/app.constants');
 
-const generateBoilerplate = (generator, action, config, isTestRun) => {
+const generateBoilerplate = (projectId, generator, action, config) => {
+  const projectDir = path.join(OUTPUT_PATH, projectId.toString());
   return new Promise((resolve, reject) => {
-    const hygenProcess = spawn('npx', ['hygen', generator, action, '--config', JSON.stringify(config), (isTestRun && '--dry'),]);
+    const hygenProcess = childProcess.spawn('npx', ['hygen', generator, action, '--outputPath', projectDir, '--config', JSON.stringify(config),]);
     // hygenProcess.stdout.on('data', data => {
     //   console.log(`stdout: ${data}`);
     // });

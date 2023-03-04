@@ -1,5 +1,5 @@
 ---
-to:  output-boilerplates/<%= appName %>/src/App.jsx
+to:  <%= outputPath %>/<%= appName %>/src/App.jsx
 force: true
 ---
 import {BrowserRouter, Route, Routes} from 'react-router-dom'

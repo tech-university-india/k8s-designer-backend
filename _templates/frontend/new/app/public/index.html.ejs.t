@@ -1,5 +1,5 @@
 ---
-to: output-boilerplates/<%= appName %>/public/index.html
+to: <%= outputPath %>/<%= appName %>/public/index.html
 force: true
 ---
 <!DOCTYPE html>

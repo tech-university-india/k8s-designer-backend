@@ -1,5 +1,5 @@
 ---
-to: output-boilerplates/<%= appName %>/src/index.js
+to: <%= outputPath %>/<%= appName %>/src/index.js
 force: true
 ---
 import React from 'react';

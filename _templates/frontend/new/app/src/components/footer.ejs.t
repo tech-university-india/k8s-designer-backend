@@ -1,5 +1,5 @@
 ---
-to: output-boilerplates/<%= appName %>/src/components/Footer/index.jsx
+to: <%= outputPath %>/<%= appName %>/src/components/Footer/index.jsx
 force: true
 ---
 import React from 'react'
