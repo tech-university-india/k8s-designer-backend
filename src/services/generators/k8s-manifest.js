@@ -44,6 +44,5 @@ const k8sManifestGenerator = async (projectId) => {
   }
 };
 
-k8sManifestGenerator(1);
 
 module.exports = k8sManifestGenerator;
