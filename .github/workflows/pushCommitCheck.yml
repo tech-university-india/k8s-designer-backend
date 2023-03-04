@@ -8,7 +8,7 @@ on:
 env:
   REGISTRY: docker.io
   OWNER: ${{secrets.DOCKER_USERNAME}}
-  IMAGE_NAME: k8s-designer-frontend
+  IMAGE_NAME: k8s-designer-backend
   TAG: $(cat VERSION.txt)-$(echo ${{github.sha}} | cut -c1-7)
 
 jobs:
