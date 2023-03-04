@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f /Users/preetinder_singh/Desktop/Work/Project/k8s-designer-backend/tmp/1/docker-compose.yaml -o /Users/preetinder_singh/Desktop/Work/Project/k8s-designer-backend/tmp/1/k8s-manifest.yaml
+    kompose.cmd: kompose convert -f /Users/Dilip_Singh/Documents/latestK8s/k8s-designer-backend/tmp/1/docker-compose.yaml -o /Users/Dilip_Singh/Documents/latestK8s/k8s-designer-backend/tmp/1/k8s-manifest.yaml
     kompose.version: 1.28.0 (HEAD)
   creationTimestamp: null
   labels:
@@ -24,7 +24,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f /Users/preetinder_singh/Desktop/Work/Project/k8s-designer-backend/tmp/1/docker-compose.yaml -o /Users/preetinder_singh/Desktop/Work/Project/k8s-designer-backend/tmp/1/k8s-manifest.yaml
+    kompose.cmd: kompose convert -f /Users/Dilip_Singh/Documents/latestK8s/k8s-designer-backend/tmp/1/docker-compose.yaml -o /Users/Dilip_Singh/Documents/latestK8s/k8s-designer-backend/tmp/1/k8s-manifest.yaml
     kompose.version: 1.28.0 (HEAD)
   creationTimestamp: null
   labels:
@@ -39,7 +39,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f /Users/preetinder_singh/Desktop/Work/Project/k8s-designer-backend/tmp/1/docker-compose.yaml -o /Users/preetinder_singh/Desktop/Work/Project/k8s-designer-backend/tmp/1/k8s-manifest.yaml
+        kompose.cmd: kompose convert -f /Users/Dilip_Singh/Documents/latestK8s/k8s-designer-backend/tmp/1/docker-compose.yaml -o /Users/Dilip_Singh/Documents/latestK8s/k8s-designer-backend/tmp/1/k8s-manifest.yaml
         kompose.version: 1.28.0 (HEAD)
       creationTimestamp: null
       labels:
