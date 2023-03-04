@@ -1,6 +1,6 @@
 // const services = require('../src/services/microservices.config.service');
-const services = require('../../src/services/microservices.config.service');
-const controller = require('../../src/controllers/microservices.controllers');
+const services = require('../../src/services/project.service');
+const controller = require('../../src/controllers/project.controller');
 
 
 // jest.mock('../../src/services/microservices.config.service');
