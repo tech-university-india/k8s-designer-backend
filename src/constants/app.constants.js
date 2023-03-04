@@ -2,7 +2,7 @@ const path = require('path');
 
 require('dotenv').config();
 
-const PROJECT_ROOT = process.env.PROJECT_ROOT;
+const PROJECT_ROOT = '/';
 
 const TEMPLATE_PATH = {
   FRONTEND: path.join(
