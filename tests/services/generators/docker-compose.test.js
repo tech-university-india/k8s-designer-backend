@@ -4,6 +4,7 @@ const {
   TEMPLATE_PATH,
   UTF8_ENCODING,
   OUTPUT_PATH,
+  DOCKER_COMPOSE_FILE_NAME,
 } = require("../../../src/constants/app.constants");
 const dockerComposeGenerator = require("../../../src/services/generators/docker-compose.js");
 const InvalidServiceTypeException = require("../../../src/exceptions/InvalidServiceTypeException");
@@ -16,6 +17,7 @@ const invalidServiceType = "INVALID_SERVICE_TYPE";
 
 const frontendConfig = {
   name: "frontend-application",
+  image: "nginx:latest",
   port: 3000,
   internalPort: 3000,
   environment: [
@@ -64,12 +66,12 @@ describe("dockerComposeGenerator", () => {
 
     const templatePath = TEMPLATE_PATH[serviceType];
     const projectDir = path.join(OUTPUT_PATH, projectId.toString());
-    const dockerComposePath = path.join(projectDir, "docker-compose.yaml");
+    const dockerComposePath = path.join(projectDir, DOCKER_COMPOSE_FILE_NAME);
 
     const template = `version: '3'
             services:
-            frontend:
-                name: "{{name}}"
+            {{name}}:
+                image: {{image}}
                 ports:
                 - "{{port}}:{{internalPort}}"
                 environment:
@@ -82,8 +84,8 @@ describe("dockerComposeGenerator", () => {
 
     const expectedDockerComposeFile = `version: '3'
             services:
-            frontend:
-                name: "frontend-application"
+            frontend-application:
+                image: nginx:latest
                 ports:
                 - "3000:3000"
                 environment:
@@ -109,12 +111,12 @@ describe("dockerComposeGenerator", () => {
     );
   });
 
-  it("should generate a docker-compose.yaml file for standalone configurations", async () => {
+  it("should generate a docker-compose.yaml file for backend configurations", async () => {
     const serviceType = "BACKEND";
 
     const templatePath = TEMPLATE_PATH[serviceType];
     const projectDir = path.join(OUTPUT_PATH, projectId.toString());
-    const dockerComposePath = path.join(projectDir, "docker-compose.yaml");
+    const dockerComposePath = path.join(projectDir, DOCKER_COMPOSE_FILE_NAME);
 
     const template = `version: '3'
             services:
