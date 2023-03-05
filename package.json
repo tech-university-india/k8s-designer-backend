@@ -9,7 +9,8 @@
     "start": "node index.js",
     "linting": "npx eslint --fix .",
     "nodemon": "nodemon index.js",
-    "build": "echo building..."
+    "prod:install": "NODE_ENV=production npm install"
+    
   },
   "prisma": {
     "seed": "node prisma/seed.js"
