@@ -3,6 +3,7 @@
 const projectServiceConfigRepository = require('../repositories/projectServiceConfig.repositories');
 const envVariablesRepository = require('../repositories/envVariables.repositories');
 const frontendServiceRepository = require('../repositories/frontendService.repositories');
+const projectRepository = require('../repositories/project.repositories');
 
 
 const generateProjectService = async (data) =>{
@@ -24,14 +25,21 @@ const generateProjectService = async (data) =>{
           value:customEnv.value, 
           frontendServicesId
         });
+
+      const projectResult = await projectRepository.create(
       
+        {userId:'c2ed1118-a016-4140-9c19-dd7eee774079'}
+        
+      );
+      
+      const projectId =  projectResult.id;
 
       const projectServiceConfigResult = await projectServiceConfigRepository.create(
         {
           serviceType:service_type,
           serviceId:frontendServicesId,
           //Considered dummy static value for project Id as Project Id has to be taken from JWT token
-          projectId:'c2ed1118-a016-4140-9c19-dd7eee774079' 
+          projectId:projectId 
         }
       
       );
