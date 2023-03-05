@@ -1,5 +1,5 @@
 ---
-to: <%= outputPath %>/<%= appName %>/data/input.json
+to:  "<%= (databases.length === 0 ? (outputPath + '/' + appName + '/data/input.json') : null) %>"
 force: true
 ---
 {
