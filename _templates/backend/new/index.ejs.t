@@ -1,9 +1,9 @@
 ---
-to: output-boilerplates/<%= appName %>/index.js
+to: <%= outputPath %>/<%= appName %>/index.js
 force: true
 ---
 const express = require('express');
-const routes =require('<%="./src/routes/"+ appName+".routes" %>');
+const routes =require('./src/routes/healthcheck.routes.js');
 
 const app = express();
 const PORT = process.env.PORT || <%= port %>;
@@ -12,7 +12,7 @@ const PORT = process.env.PORT || <%= port %>;
 const cors = require('cors');
 const corsOrigins = [
   <% frontends.map(frontend => { %>
-    '<%= frontend.url + ':' + frontend.port %>',
+  '<%= frontend.url + ':' + frontend.port %>',
   <% }); %>
 ];
 

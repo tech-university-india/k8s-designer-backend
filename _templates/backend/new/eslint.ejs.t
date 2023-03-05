@@ -1,5 +1,5 @@
 ---
-to: output-boilerplates/<%= appName %>/.eslintrc.json
+to: <%= outputPath %>/<%= appName %>/.eslintrc.json
 force: true
 ---
 {

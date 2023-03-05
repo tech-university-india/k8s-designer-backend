@@ -1,5 +1,5 @@
 ---
-to: output-boilerplates/<%= appName %>/data/input.json
+to: <%= outputPath %>/<%= appName %>/data/input.json
 force: true
 ---
 {

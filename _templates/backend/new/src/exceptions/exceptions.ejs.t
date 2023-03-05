@@ -1,5 +1,5 @@
 ---
-to: output-boilerplates/<%= appName %>/src/exceptions/<%=appName%>.exceptions.js
+to: <%= outputPath %>/<%= appName %>/src/exceptions/healthcheck.exceptions.js
 force: true
 ---
 class httpError extends Error {

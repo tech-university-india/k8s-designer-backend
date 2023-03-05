@@ -1,9 +1,9 @@
 ---
-to: output-boilerplates/<%= appName %>/src/controllers/<%=appName%>.controllers.js
+to: <%= outputPath %>/<%= appName %>/src/controllers/healthcheck.controllers.js
 force: true
 ---
-const services = require("<%='../services/'+ appName+'.services' %>");
-const httpError = require("<%='../exceptions/'+ appName+'.exceptions' %>");
+const services = require('../services/healthcheck.services.js');
+const httpError = require('../exceptions/healthcheck.exceptions.js');
 const httpConstants = require('http2').constants;
 
 const getDetails = async (req, res) => {
