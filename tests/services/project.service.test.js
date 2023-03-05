@@ -3,6 +3,7 @@ const services = require('../../src/services/project.service.js');
 const frontendServiceRepository = require('../../src/repositories/frontendService.repositories.js');
 const envVariablesRepository = require('../../src/repositories/envVariables.repositories.js');
 const projectServiceConfigRepository = require('../../src/repositories/projectServiceConfig.repositories.js');
+const projectRepository = require('../../src/repositories/project.repositories');
 
 describe('microservices  service  testing', () => {
   it('should populate microservice table ', async () => {
@@ -20,11 +21,15 @@ describe('microservices  service  testing', () => {
       'value':'2345',
       'frontendServicesId':1
     });
-    jest.spyOn(projectServiceConfigRepository,'create').mockResolvedValueOnce({
+    jest.spyOn(projectRepository,'create').mockResolvedValueOnce({
       'id':3,
+      'userId':4
+    });
+    jest.spyOn(projectServiceConfigRepository,'create').mockResolvedValueOnce({
+      'id':5,
       'serviceType':'FrontEnd',
       'serviceId':1,
-      'envVariablesId':2
+      'projectId':3
     });
 
 
@@ -48,7 +53,7 @@ describe('microservices  service  testing', () => {
       json: jest.fn(),
     };
 
-    const result = await services.setMicroservicesConfigService(mockreq.body);
+    const result = await services.generateProjectService(mockreq.body);
     // expect(mockFsCreate).toHaveBeenCalledTimes(1);
     expect(result).toEqual({'services':[
       {

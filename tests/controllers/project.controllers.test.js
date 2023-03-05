@@ -8,7 +8,7 @@ const controller = require('../../src/controllers/project.controller');
 describe('microservices controller testing', () => {
   it('should populate microservice table ', async () => {
    
-    jest.spyOn(services, 'setMicroservicesConfigService').mockResolvedValue({'services':[
+    jest.spyOn(services, 'generateProjectService').mockResolvedValue({'services':[
       {
         'service_type': 'FrontEnd',
         'configurations':{
@@ -42,7 +42,7 @@ describe('microservices controller testing', () => {
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
     };
-    await controller.setMicroServicesConfig(mockreq, mockres);
+    await controller.generateProjectController(mockreq, mockres);
     expect(mockres.status).toHaveBeenCalledWith(200);
     expect(mockres.json).toHaveBeenCalledWith({
       data:{'services':[
@@ -66,7 +66,7 @@ describe('microservices controller testing', () => {
 
   it('should return error when service throw error ', async () => {
    
-    jest.spyOn(services, 'setMicroservicesConfigService').mockRejectedValue(new Error('error'));    
+    jest.spyOn(services, 'generateProjectService').mockRejectedValue(new Error('error'));    
     const mockreq = {body:{'services':[
       {
         'service_type': 'FrontEnd',
@@ -86,7 +86,7 @@ describe('microservices controller testing', () => {
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
     };
-    await controller.setMicroServicesConfig(mockreq, mockres);
+    await controller.generateProjectController(mockreq, mockres);
     expect(mockres.status).toHaveBeenCalledWith(500);
     expect(mockres.json).toHaveBeenCalledWith({
       data:'error'
