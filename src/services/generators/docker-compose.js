@@ -36,16 +36,4 @@ const dockerComposeGenerator = async (projectId, serviceType, config) => {
   }
 };
 
-dockerComposeGenerator(1, 'FRONTEND', {
-  name: "frontend",
-  image: "nginx:latest",
-  port: 3000,
-  internalPort: 3000,
-  environment: [
-    { name: "BACKEND_API_URL", value: "http://backend-application/8080" },
-    { name: "DEBUG", value: true },
-  ],
-  replicas: 3,
-})
-
 module.exports = dockerComposeGenerator;
