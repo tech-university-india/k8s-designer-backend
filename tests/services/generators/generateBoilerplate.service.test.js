@@ -17,7 +17,7 @@ describe(('generateBoilerplate'), () => {
           key2: 'value2',
           key3: 'value3',
         },
-        backend : [{
+        backends : [{
           name: 'backend1',
           url: 'http://localhost',
           port: 5500,
