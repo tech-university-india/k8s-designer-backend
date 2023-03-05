@@ -1,5 +1,9 @@
+---
+to: <%= outputPath %>/<%= appName %>/package.json
+force: true
+---
 {
-  "name": "k8s-designer-backend",
+  "name": "<%= appName %>",
   "version": "1.0.0",
   "description": "Standalone Backend Boilerplate using NodeJS and Express",
   "main": "index.js",
@@ -7,11 +11,8 @@
     "test": "jest",
     "test-coverage": "concurrently 'npx jest tests' 'npx jest --coverage'",
     "start": "node index.js",
-    "linting": "npx eslint --fix .",
+    "lint": "npx eslint --fix .",
     "nodemon": "nodemon index.js"
-  },
-  "prisma": {
-    "seed": "node prisma/seed.js"
   },
   "keywords": [
     "microservice",
@@ -22,23 +23,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^18.13.0",
     "concurrently": "^7.6.0",
     "eslint": "^8.33.0",
-    "jest": "^29.4.3",
-    "prisma": "^4.10.1",
-    "rimraf": "^4.1.2",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.9.5"
+    "nodemon": "^2.0.21"
   },
   "dependencies": {
-    "@prisma/client": "^4.10.1",
-    "archiver": "^5.3.1",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "fs-extra": "^11.1.0",
-    "hygen": "^6.2.11",
-    "joi": "^17.7.0",
-    "mustache": "^4.2.0"
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
   }
 }
