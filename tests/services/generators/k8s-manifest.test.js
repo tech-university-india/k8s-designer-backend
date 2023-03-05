@@ -1,6 +1,5 @@
 const { exec } = require('child_process');
-const sinon = require('sinon');
-const mock = require('mock-fs');
+
 const { k8sManifestGenerator } = require('../../../src/services/generators/k8s-manifest');
 
 jest.mock('child_process');
