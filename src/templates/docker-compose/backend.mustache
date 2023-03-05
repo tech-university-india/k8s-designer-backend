@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  {{name}}:
+    image: {{image}}
+    ports: 
+      - "{{port}}:{{internalPort}}"
+    environment: 
+      {{#environment}}
+      {{name}}: "{{{value}}}"
+      {{/environment}}
+    deploy: 
+      replicas: {{replicas}}
+      
