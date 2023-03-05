@@ -9,7 +9,7 @@
     "start": "node index.js",
     "linting": "npx eslint --fix .",
     "nodemon": "nodemon index.js",
-    "prod:install": "NODE_ENV=production npm install"
+    "prod:install": "NODE_ENV=production npm install "
     
   },
   "prisma": {
