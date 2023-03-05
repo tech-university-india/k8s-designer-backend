@@ -3,9 +3,9 @@ const services = require('../services/project.service');
 //const httpConstants = require('http2').constants;
 
 
-const setMicroServicesConfig = async (req,res)=>{
+const generateProjectController = async (req,res)=>{
   try{
-    const result = await services.setMicroservicesConfigService(req.body);
+    const result = await services.generateProjectService(req.body);
     console.log(result);
     res.status(200).json({data:result,success:true});
   }catch (err) {
@@ -15,4 +15,4 @@ const setMicroServicesConfig = async (req,res)=>{
 
 };
 
-module.exports = {setMicroServicesConfig};
+module.exports = {generateProjectController};

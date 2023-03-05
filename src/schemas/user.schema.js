@@ -1,6 +1,6 @@
 const joi = require('joi');
-const customerSchema = joi.object({
-  customer_id: joi.number()
+const userSchema = joi.object({
+  user_id: joi.number()
 });
 
-module.exports = { customerSchema };
+module.exports = { userSchema };
