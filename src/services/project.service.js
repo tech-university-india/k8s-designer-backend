@@ -6,94 +6,95 @@ const frontendServiceRepository = require('../repositories/frontendService.repos
 const projectRepository = require('../repositories/project.repositories');
 
 
-const generateProjectService = async (data) =>{
-  const {services} = data;
-  const repositoryServiceObj = {
-    FrontEnd: async (service)=>{
-      const {service_type,configurations,customEnv} = service;
-      const frontendServicesResult = await frontendServiceRepository.create(
+const generateProject = async (data) =>{
+    const {services} = data;
+    const repositoryServiceObj = {
+        FrontEnd: async (service)=>{
+            const {service_type,configurations,customEnv} = service;
+            const frontendServicesResult = await frontendServiceRepository.create(
       
-        {reactVersion:configurations.reactVersion, 
-          numberOfReplicas:configurations.numberOfReplicas, 
-          name:configurations.name, 
-          port:configurations.port}
+                {reactVersion:configurations.reactVersion, 
+                    numberOfReplicas:configurations.numberOfReplicas, 
+                    name:configurations.name, 
+                    port:configurations.port}
       
-      );
-      const frontendServicesId =  frontendServicesResult.id;
-      const envVariablesResult = await envVariablesRepository.create(
-        {field:customEnv.field,
-          value:customEnv.value, 
-          frontendServicesId
-        });
+            );
+            const frontendServicesId =  frontendServicesResult.id;
+            // eslint-disable-next-line no-unused-vars
+            const envVariablesResult = await envVariablesRepository.create(
+                {field:customEnv.field,
+                    value:customEnv.value, 
+                    frontendServicesId
+                });
 
-      const projectResult = await projectRepository.create(
+            const projectResult = await projectRepository.create(
       
-        {userId:'c2ed1118-a016-4140-9c19-dd7eee774079'}
+                {userId:'c2ed1118-a016-4140-9c19-dd7eee774079'}
         
-      );
+            );
       
-      const projectId =  projectResult.id;
+            const projectId =  projectResult.id;
 
-      const projectServiceConfigResult = await projectServiceConfigRepository.create(
-        {
-          serviceType:service_type,
-          serviceId:frontendServicesId,
-          //Considered dummy static value for project Id as Project Id has to be taken from JWT token
-          projectId:projectId 
-        }
+            const projectServiceConfigResult = await projectServiceConfigRepository.create(
+                {
+                    serviceType:service_type,
+                    serviceId:frontendServicesId,
+                    //Considered dummy static value for project Id as Project Id has to be taken from JWT token
+                    projectId:projectId 
+                }
       
-      );
-      // await Promise.all([frontendServicesResult, envVariablesResult, projectServiceConfigResult]);
-      //return projectServiceConfigResult;
-      return projectServiceConfigResult;
-    },
+            );
+            // await Promise.all([frontendServicesResult, envVariablesResult, projectServiceConfigResult]);
+            //return projectServiceConfigResult;
+            return projectServiceConfigResult;
+        },
     
     
-    BackEnd: ()=>{},
-    Database: ()=>{}
-  };
+        BackEnd: ()=>{},
+        Database: ()=>{}
+    };
   
-  services.forEach(async (service)=>{
-    repositoryServiceObj[service.service_type](service);
-    // switch(service.service_type)
-    // {
-    // case 'FrontEnd':
-    // {
-    //   const {service_type,configurations,customEnv} = service;
-    //   const frontendServicesResult = await frontendServiceRepository.create(
+    services.forEach(async (service)=>{
+        repositoryServiceObj[service.service_type](service);
+        // switch(service.service_type)
+        // {
+        // case 'FrontEnd':
+        // {
+        //   const {service_type,configurations,customEnv} = service;
+        //   const frontendServicesResult = await frontendServiceRepository.create(
       
-    //     {reactVersion:configurations.reactVersion, 
-    //       numberOfReplicas:configurations.numberOfReplicas, 
-    //       name:configurations.name, 
-    //       port:configurations.port}
+        //     {reactVersion:configurations.reactVersion, 
+        //       numberOfReplicas:configurations.numberOfReplicas, 
+        //       name:configurations.name, 
+        //       port:configurations.port}
       
-    //   );
-    //   const frontendServicesId =  frontendServicesResult.id;
-    //   const envVariablesResult = await envVariablesRepository.create(
-    //     {field:customEnv.field,
-    //       value:customEnv.value, 
-    //       frontendServicesId
-    //     });
+        //   );
+        //   const frontendServicesId =  frontendServicesResult.id;
+        //   const envVariablesResult = await envVariablesRepository.create(
+        //     {field:customEnv.field,
+        //       value:customEnv.value, 
+        //       frontendServicesId
+        //     });
       
 
-    //   const projectServiceConfigResult = await projectServiceConfigRepository.create(
-    //     {
-    //       serviceType:service_type,
-    //       serviceId:frontendServicesId,
-    //       //Considered dummy static value for project Id as Project Id has to be taken from JWT token
-    //       projectId:'c2ed1118-a016-4140-9c19-dd7eee774077' 
-    //     }
+        //   const projectServiceConfigResult = await projectServiceConfigRepository.create(
+        //     {
+        //       serviceType:service_type,
+        //       serviceId:frontendServicesId,
+        //       //Considered dummy static value for project Id as Project Id has to be taken from JWT token
+        //       projectId:'c2ed1118-a016-4140-9c19-dd7eee774077' 
+        //     }
       
-    //   );
-    //   // await Promise.all([frontendServicesResult, envVariablesResult, projectServiceConfigResult]);
-    //   //return projectServiceConfigResult;
+        //   );
+        //   // await Promise.all([frontendServicesResult, envVariablesResult, projectServiceConfigResult]);
+        //   //return projectServiceConfigResult;
 
     // }
     // }
-  });
+    });
   
-  return data;
+    return data;
   
 };
 
-module.exports = {generateProjectService};
+module.exports = {generateProject};

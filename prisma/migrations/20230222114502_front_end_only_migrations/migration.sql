@@ -5,13 +5,13 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 CREATE TYPE "ServiceType" AS ENUM ('FrontEnd', 'BackEnd', 'Database');
 
 -- CreateTable
-CREATE TABLE "users" (
-    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
-    "full_name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+-- CREATE TABLE "users" (
+--     "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+--     "full_name" TEXT NOT NULL,
+--     "email" TEXT NOT NULL,
 
-    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
-);
+--     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+-- );
 
 -- CreateTable
 CREATE TABLE "Project" (
@@ -53,7 +53,7 @@ CREATE TABLE "EnvVariables" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+-- CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Project_userId_key" ON "Project"("userId");

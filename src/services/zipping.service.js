@@ -5,29 +5,29 @@ const folderUtility= require('../utility/folder.utility.js');
 
 
 const zipFolder=(folderPath, outputPath)=> {
-  const outputFilePath = path.resolve(outputPath);
+    const outputFilePath = path.resolve(outputPath);
     
-  return new Promise((resolve, reject) => {
-    const resolvedFolderPath = path.resolve(folderPath);
-    folderUtility.doesFolderExist(resolvedFolderPath).then(() => {
+    return new Promise((resolve, reject) => {
+        const resolvedFolderPath = path.resolve(folderPath);
+        folderUtility.doesFolderExist(resolvedFolderPath).then(() => {
 
-      const folderName = path.parse(resolvedFolderPath).base;
+            const folderName = path.parse(resolvedFolderPath).base;
 
-      const output = fs.createWriteStream(outputFilePath);
+            const output = fs.createWriteStream(outputFilePath);
 
-      archive.pipe(output);
-      archive.directory(resolvedFolderPath, folderName);
-      archive.finalize();
+            archive.pipe(output);
+            archive.directory(resolvedFolderPath, folderName);
+            archive.finalize();
 
-      output.on('close', () => {
-        resolve(outputFilePath);
-      });
-    }).catch((err) => {
-      reject(err);
+            output.on('close', () => {
+                resolve(outputFilePath);
+            });
+        }).catch((err) => {
+            reject(err);
+        });
     });
-  });
 };
 
 module.exports = {
-  zipFolder
+    zipFolder
 };

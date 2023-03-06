@@ -12,52 +12,60 @@ datasource db {
   extensions = [pgcrypto]
 }
 
-model User {
+model user {
   id       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   fullName String   @map("full_name")
-  email    String   @unique
-  Project  Project?
+  email    String   @unique @map("email")
+  Project  project?
 
   @@map("users")
 }
 
-model Project {
+model project {
   id                   String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  user                 User                  @relation(fields: [userId], references: [id])
-  userId               String                @unique @db.Uuid
-  ProjectServiceConfig ProjectServiceConfig?
+  user                 user                  @relation(fields: [userId], references: [id])
+  userId               String                @unique @map("user_id") @db.Uuid
+  ProjectServiceConfig projectServiceConfig?
+
+  @@map("projects")
 }
 
-model ProjectServiceConfig {
+model projectServiceConfig {
   id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  serviceType ServiceType @default(FrontEnd)
+  serviceType serviceType @default(FrontEnd) @map("service_type")
 
-  service   FrontendService @relation(fields: [serviceId], references: [id])
-  serviceId String          @db.Uuid
+  service   frontendService @relation(fields: [serviceId], references: [id])
+  serviceId String          @map("service_id") @db.Uuid
 
-  project   Project? @relation(fields: [projectId], references: [id])
-  projectId String   @unique @db.Uuid
+  project   project? @relation(fields: [projectId], references: [id])
+  projectId String   @unique @map("project_id") @db.Uuid
+
+  @@map("project_service_configs")
 }
 
-model FrontendService {
+model frontendService {
   id                   String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  reactVersion         String
-  port                 String
-  numberOfReplicas     Int
-  name                 String
-  envVariables         EnvVariables[]
-  projectServiceConfig ProjectServiceConfig[]
+  reactVersion         String                 @map("react_version")
+  port                 String                 @map("port")
+  numberOfReplicas     Int                    @map("number_of_replicas")
+  name                 String                 @map("name")
+  envVariables         envVariables[]
+  projectServiceConfig projectServiceConfig[]
+
+  @@map("frontend_services")
 }
 
-model EnvVariables {
+model envVariables {
   id                 String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  field              String
-  value              String
-  frontendService    FrontendService @relation(fields: [frontendServicesId], references: [id])
-  frontendServicesId String          @db.Uuid
+  field              String          @map("field")
+  value              String          @map("value")
+  frontendService    frontendService @relation(fields: [frontendServicesId], references: [id])
+  frontendServicesId String          @map("frontend_services_id") @db.Uuid
+
+  @@map("env_variables")
 }
 
-enum ServiceType {
+enum serviceType {
   FrontEnd
   BackEnd
   Database
