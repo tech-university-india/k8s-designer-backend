@@ -1,6 +1,4 @@
 const ProjectService = require('../services/project.service');
-// const httpError = require('../exceptions/user.exception');
-//const httpConstants = require('http2').constants;
 
 
 const generateProjectController = async (req,res)=>{

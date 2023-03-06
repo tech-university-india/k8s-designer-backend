@@ -55,7 +55,6 @@ describe('microservices  service  testing', () => {
         };
 
         const result = await services.generateProject(mockreq.body);
-        // expect(mockFsCreate).toHaveBeenCalledTimes(1);
         expect(result).toEqual({'services':[
             {
                 'service_type': 'FrontEnd',

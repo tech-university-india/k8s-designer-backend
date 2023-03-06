@@ -39,13 +39,11 @@ const generateProject = async (data) =>{
                 {
                     serviceType:service_type,
                     serviceId:frontendServicesId,
-                    //Considered dummy static value for project Id as Project Id has to be taken from JWT token
                     projectId:projectId 
                 }
       
             );
-            // await Promise.all([frontendServicesResult, envVariablesResult, projectServiceConfigResult]);
-            //return projectServiceConfigResult;
+          
             return projectServiceConfigResult;
         },
     
@@ -56,41 +54,7 @@ const generateProject = async (data) =>{
   
     services.forEach(async (service)=>{
         repositoryServiceObj[service.service_type](service);
-        // switch(service.service_type)
-        // {
-        // case 'FrontEnd':
-        // {
-        //   const {service_type,configurations,customEnv} = service;
-        //   const frontendServicesResult = await frontendServiceRepository.create(
-      
-        //     {reactVersion:configurations.reactVersion, 
-        //       numberOfReplicas:configurations.numberOfReplicas, 
-        //       name:configurations.name, 
-        //       port:configurations.port}
-      
-        //   );
-        //   const frontendServicesId =  frontendServicesResult.id;
-        //   const envVariablesResult = await envVariablesRepository.create(
-        //     {field:customEnv.field,
-        //       value:customEnv.value, 
-        //       frontendServicesId
-        //     });
-      
-
-        //   const projectServiceConfigResult = await projectServiceConfigRepository.create(
-        //     {
-        //       serviceType:service_type,
-        //       serviceId:frontendServicesId,
-        //       //Considered dummy static value for project Id as Project Id has to be taken from JWT token
-        //       projectId:'c2ed1118-a016-4140-9c19-dd7eee774077' 
-        //     }
-      
-        //   );
-        //   // await Promise.all([frontendServicesResult, envVariablesResult, projectServiceConfigResult]);
-        //   //return projectServiceConfigResult;
-
-    // }
-    // }
+   
     });
   
     return data;
