@@ -1,5 +1,5 @@
 ---
-to:  "<%= (databases.length > 0 ? (outputPath + '/' + appName + '/database/seeders/seed-data.js') : null) %>"
+to: <%= outputPath %>/<%= appName %>/database/seeders/<%= database.dbName %>/seed-data.js
 force: true
 ---
 /* eslint-disable no-unused-vars */
@@ -17,25 +17,14 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    return queryInterface.bulkInsert('Colors', [
+    return queryInterface.bulkInsert('<%= database.model.tableName %>', [
+      <%_ database.model.data.forEach((data) => { _%>
       {
-        name: 'red',
-        hex: '#ff0000',
+        name: '<%= data %>',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      {
-        name: 'green',
-        hex: '#00ff00',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        name: 'blue',
-        hex: '#0000ff',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }
+      <%_ }) _%>
     ], {});
   },
 
@@ -46,6 +35,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    return queryInterface.bulkDelete('Colors', null, {});
+    return queryInterface.bulkDelete('<%= database.model.tableName %>', null, {});
   }
 };

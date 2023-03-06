@@ -1,5 +1,5 @@
 ---
-to:  "<%= (databases.length > 0 ? (outputPath + '/' + appName + '/src/models/color.js') : null) %>"
+to: <%= outputPath %>/<%= appName %>/src/models/<%= database.dbName %>/<%= database.model.name %>.js
 force: true
 ---
 'use strict';
@@ -7,7 +7,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Color extends Model {
+  class <%= database.model.name %> extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -17,12 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Color.init({
+  <%= database.model.name %>.init({
     name: DataTypes.STRING,
-    hex: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Color',
+    modelName: '<%= database.model.name %>',
   });
-  return Color;
+  return <%= database.model.name %>;
 };

@@ -9,11 +9,16 @@ const getDetails = () => data.colors;
 <% } %>
 
 <% if(databases.length > 0){ %>
-const {Color} = require('../models');
+<%_ databases.forEach((db) => { _%>
+const {<%= db.model.name %>} = require('../models');
+<%_ }) _%>
 
 const getDetails = async () => {
-  const colors = await Color.findAll();
-  return colors;
+  const response = {};
+  <%_ databases.forEach((db, i) => { _%>
+  response[<%= i %>] = await <%= db.model.name %>.findAll();
+  <%_ }) _%>
+  return response;
 };
 <% } %>
 

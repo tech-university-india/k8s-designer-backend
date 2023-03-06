@@ -1,12 +1,12 @@
 ---
-to:  "<%= (databases.length > 0 ? (outputPath + '/' + appName + '/database/migrations/create-model.js') : null) %>"
+to: <%= outputPath %>/<%= appName %>/database/migrations/<%= database.dbName %>/create-model.js
 force: true
 ---
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Colors', {
+    await queryInterface.createTable('<%= database.model.tableName %>', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -30,6 +30,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Colors');
+    await queryInterface.dropTable('<%= database.model.tableName %>');
   }
 };
