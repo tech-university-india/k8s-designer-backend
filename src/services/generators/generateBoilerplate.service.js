@@ -19,7 +19,6 @@ const runHygen = (projectId, generator, action, config) => {
         reject(code);
       }
     });
-  });
 };
 
 const generateBoilerplate = (projectId, microservice, config) => {

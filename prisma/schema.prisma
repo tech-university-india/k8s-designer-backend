@@ -2,19 +2,71 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
   extensions = [pgcrypto]
 }
 
-model User {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  fullName String @map("full_name")
-  email     String @unique
+model user {
+  id       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  fullName String   @map("full_name")
+  email    String   @unique @map("email")
+  Project  project?
+
   @@map("users")
+}
+
+model project {
+  id                   String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user                 user                  @relation(fields: [userId], references: [id])
+  userId               String                @unique @map("user_id") @db.Uuid
+  ProjectServiceConfig projectServiceConfig?
+
+  @@map("projects")
+}
+
+model projectServiceConfig {
+  id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  serviceType serviceType @default(FrontEnd) @map("service_type")
+
+  service   frontendService @relation(fields: [serviceId], references: [id])
+  serviceId String          @map("service_id") @db.Uuid
+
+  project   project? @relation(fields: [projectId], references: [id])
+  projectId String   @unique @map("project_id") @db.Uuid
+
+  @@map("project_service_configs")
+}
+
+model frontendService {
+  id                   String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  reactVersion         String                 @map("react_version")
+  port                 String                 @map("port")
+  numberOfReplicas     Int                    @map("number_of_replicas")
+  name                 String                 @map("name")
+  envVariables         envVariables[]
+  projectServiceConfig projectServiceConfig[]
+
+  @@map("frontend_services")
+}
+
+model envVariables {
+  id                 String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  field              String          @map("field")
+  value              String          @map("value")
+  frontendService    frontendService @relation(fields: [frontendServicesId], references: [id])
+  frontendServicesId String          @map("frontend_services_id") @db.Uuid
+
+  @@map("env_variables")
+}
+
+enum serviceType {
+  FrontEnd
+  BackEnd
+  Database
 }
