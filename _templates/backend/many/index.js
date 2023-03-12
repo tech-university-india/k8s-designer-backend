@@ -1,6 +1,7 @@
 module.exports = {
   params: ({ args }) => {
     const parsedConfig = JSON.parse(args.config);
-    return parsedConfig.frontend;
+    console.log(parsedConfig);
+    return parsedConfig;
   }
 };
