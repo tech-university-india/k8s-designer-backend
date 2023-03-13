@@ -3,7 +3,7 @@ name: Backend Build and Deploy
 on:
   push:
     branches:
-      - feature/push-commit-check
+      - main
 
 env:
   REGISTRY: docker.io
@@ -23,6 +23,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
         run: |
