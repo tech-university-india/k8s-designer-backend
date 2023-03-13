@@ -14,12 +14,6 @@ const runHygen = (projectId, generator, action, config) => {
             '--config',
             JSON.stringify(config),
         ]);
-        // hygenProcess.stdout.on('data', data => {
-        //   console.log(`stdout: ${data}`);
-        // });
-        // hygenProcess.stderr.on('data', data => {
-        //   console.log(`stderr: ${data}`);
-        // });
         hygenProcess.on('close', (code) => {
             if (code === 0) {
                 resolve(code);
