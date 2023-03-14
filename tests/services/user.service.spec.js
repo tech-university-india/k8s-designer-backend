@@ -2,7 +2,6 @@ const userService = require('../../src/services/user.service');
 const passwordUtil = require('../../src/utility/password.util');
 const jwtUtil = require('../../src/utility/jwt.util');
 const userRepositoryService = require('../../src/repositories/user.repositories');
-const httpError = require('../../src/exceptions/user.exception');
 
 describe('User Service', () => { 
   describe('Create User', () => { 
