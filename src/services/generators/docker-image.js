@@ -9,37 +9,19 @@ const generateDockerImage = async (projectId, username) => {
 
   const boilerplateNames = await getDirectoryNamesInsideFolder(projectDir);
 
-  try {
-    await Promise.all(
-      boilerplateNames.map(async (boilerplateName) => {
-        const boilerplatePath = path.join(projectDir, boilerplateName);
+  await Promise.all(
+    boilerplateNames.map(async (boilerplateName) => {
+      const boilerplatePath = path.join(projectDir, boilerplateName);
 
-        const stream = await docker.buildImage(
-          {
-            context: boilerplatePath,
-            src: ["Dockerfile"],
-          },
-          { t: `${username}/${boilerplateName}` }
-        );
-
-        let data = "";
-
-        stream.on("data", (chunk) => {
-          data += chunk;
-
-          console.log("incoming", data);
-        });
-
-        stream.on("end", () => {
-          console.log("ended", data);
-        });
-      })
-    );
-  } catch (err) {
-    console.error("Error generating docker image", err);
-  }
+      await docker.buildImage(
+        {
+          context: boilerplatePath,
+          src: ["Dockerfile", "."],
+        },
+        { t: `${username}/${boilerplateName}` }
+      );
+    })
+  );
 };
-
-generateDockerImage(1, "preetindersingh");
 
 module.exports = generateDockerImage;
