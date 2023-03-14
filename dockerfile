@@ -1,6 +1,6 @@
 FROM node:16-alpine3.16 as baseEnv
 WORKDIR /app
-COPY package* . 
+COPY package* /app/ 
 RUN ["npm", "ci", "--only=production"]
 COPY . .
 
