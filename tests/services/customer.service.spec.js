@@ -1,4 +1,4 @@
-const services = require('../../src/services/customer.service');
+const services = require('../../src/services/user.service');
 
 describe('Test for Services', () => {
     describe('Test GET API', () => {
