@@ -5,66 +5,66 @@ const frontendServiceRepository = require('../repositories/frontendService.repos
 const backendServiceRepository = require('../repositories/backendService.repositories');
 
 const repositoryServiceObj = {
-    FrontEnd: async (service, projectId)=>{
-        const {service_type,configurations,customEnv} = service;
-        const projectServiceConfigResult = await projectServiceConfigRepository.create(
-            {
-                serviceType:service_type,
-                projectId:projectId 
-            }
+  FrontEnd: async (service, projectId)=>{
+    const {service_type,configurations,customEnv} = service;
+    const projectServiceConfigResult = await projectServiceConfigRepository.create(
+      {
+        serviceType:service_type,
+        projectId:projectId 
+      }
       
-        );
-        const serviceId= projectServiceConfigResult.id;
+    );
+    const serviceId= projectServiceConfigResult.id;
         
-        await frontendServiceRepository.create(
+    await frontendServiceRepository.create(
       
-            {
-                numberOfReplicas:configurations.numberOfReplicas, 
-                name:configurations.name, 
-                port:configurations.port,
-                serviceId:serviceId
-            }
+      {
+        numberOfReplicas:configurations.numberOfReplicas, 
+        name:configurations.name, 
+        port:configurations.port,
+        serviceId:serviceId
+      }
       
-        );
-        await envVariablesRepository.create(
-            {field:customEnv.field,
-                value:customEnv.value, 
-                serviceId: serviceId,
-            });
+    );
+    await envVariablesRepository.create(
+      {field:customEnv.field,
+        value:customEnv.value, 
+        serviceId: serviceId,
+      });
 
-        return serviceId;
-    },
+    return serviceId;
+  },
 
-    BackEnd: async (service, projectId)=>{
-        const {service_type,configurations,customEnv} = service;
-        const projectServiceConfigResult = await projectServiceConfigRepository.create(
-            {
-                serviceType:service_type,
-                projectId:projectId 
-            }
+  BackEnd: async (service, projectId)=>{
+    const {service_type,configurations,customEnv} = service;
+    const projectServiceConfigResult = await projectServiceConfigRepository.create(
+      {
+        serviceType:service_type,
+        projectId:projectId 
+      }
       
-        );
-        const serviceId= projectServiceConfigResult.id;
+    );
+    const serviceId= projectServiceConfigResult.id;
         
-        await backendServiceRepository.create(
+    await backendServiceRepository.create(
       
-            {
-                numberOfReplicas:configurations.numberOfReplicas, 
-                name:configurations.name, 
-                port:configurations.port,
-                serviceId:serviceId
-            }
+      {
+        numberOfReplicas:configurations.numberOfReplicas, 
+        name:configurations.name, 
+        port:configurations.port,
+        serviceId:serviceId
+      }
       
-        );
-        await envVariablesRepository.create(
-            {field:customEnv.field,
-                value:customEnv.value, 
-                serviceId: serviceId,
-            });  
+    );
+    await envVariablesRepository.create(
+      {field:customEnv.field,
+        value:customEnv.value, 
+        serviceId: serviceId,
+      });  
           
-        return serviceId;
-    },
-    Database: ()=>{}
+    return serviceId;
+  },
+  Database: ()=>{}
 };
 
 module.exports = repositoryServiceObj;
